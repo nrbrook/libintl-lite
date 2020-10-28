@@ -145,12 +145,13 @@ public:
 // Helper function to load strings from a .mo file and stores them in a given array
 
 static bool loadMoFileStringsToArray(FILE* moFile,
+		long initialOffset,
 		uint32_t numberOfStrings,
 		uint32_t stringsTableOffsetFromFileBegin,
 		bool needsBeToLeConversion,
 		std::string* outStringsFromMoFileArray)
 {
-	if (fseek(moFile, stringsTableOffsetFromFileBegin, SEEK_SET) != 0) return false;
+	if (fseek(moFile, stringsTableOffsetFromFileBegin + initialOffset, SEEK_SET) != 0) return false;
 
 	uint32_t* stringsLengthsArray = NULL;
 	ArrayGurard<uint32_t> stringsLengthsArrayGuard(stringsLengthsArray);
@@ -194,7 +195,7 @@ static bool loadMoFileStringsToArray(FILE* moFile,
 			return false;
 		}
 
-		if (fseek(moFile, firstStringOffset, SEEK_SET) != 0) return false;
+		if (fseek(moFile, firstStringOffset + initialOffset, SEEK_SET) != 0) return false;
 		stringCharsArray = new char[stringCharsArraySize];
 		if (!stringCharsArray)
 		{

@@ -82,6 +82,8 @@ libintl_lite_bool_t loadMessageCatalogFile(const char* domain, FILE* moFile)
 			return LIBINTL_LITE_BOOL_FALSE;
 		}
 
+		long initialOffset = ftell(moFile);
+
 		uint32_t magicNumber;
 		if (!readUIn32FromFile(moFile, false, magicNumber)) return LIBINTL_LITE_BOOL_FALSE;
 		if ((magicNumber != 0x950412de) && (magicNumber != 0xde120495)) return LIBINTL_LITE_BOOL_FALSE;
@@ -114,6 +116,7 @@ libintl_lite_bool_t loadMessageCatalogFile(const char* domain, FILE* moFile)
 		}
 
 		if (!loadMoFileStringsToArray(moFile,
+				initialOffset,
 				numberOfStrings,
 				offsetOrigTable,
 				needsBeToLeConversion,
@@ -128,6 +131,7 @@ libintl_lite_bool_t loadMessageCatalogFile(const char* domain, FILE* moFile)
 		}
 
 		if (!loadMoFileStringsToArray(moFile,
+				initialOffset,
 				numberOfStrings,
 				offsetTransTable,
 				needsBeToLeConversion,
