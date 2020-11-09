@@ -77,7 +77,7 @@ LIBINTL_LITE_API void closeLoadedMessageCatalog(const char* domain);
  * This function is NOT thread safe!
  * Pay attention to the thread safety remarks of the gettext() function!
  */
-LIBINTL_LITE_API void closeAllLoadedMessageCatalogs();
+LIBINTL_LITE_API void closeAllLoadedMessageCatalogs(void);
 
 /**
  * Sets the default text domain for gettext() / ngettext() calls.
